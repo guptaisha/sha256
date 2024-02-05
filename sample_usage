@@ -1,0 +1,19 @@
+//Sample usage of set session storage or cookie value
+var email_value = "code to get value"
+var sess_set = sessionStorage.setItem('email_value');
+s.Util.cookieWrite("cc_email",email_value);
+
+//use sha256 encoding for step above
+
+//Sample usage of cookie to populate value of an eVar
+var cookie_email = s.Util.cookieRead("cc_email")
+if (cookie_email!="")
+{
+  s.eVar100 = s.Util.cookieRead("cc_email");
+ }
+
+//Sample usage of session storage item to populate value of an eVar
+var test_val = sessionStorage.getItem('email_hash');
+if (test_val !== null) {
+s.eVar100 = test_val;
+}
