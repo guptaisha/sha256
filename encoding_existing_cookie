@@ -1,0 +1,29 @@
+//store value of email cookie has sha256 hash and store in a data element
+setTimeout(function(){ 
+function sha256(input) {
+  const buffer = new TextEncoder().encode(input);
+  return crypto.subtle.digest('SHA-256', buffer)
+    .then(hashBuffer => {
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('');
+      return hashHex;
+    });
+}
+
+const emailCookie = _satellite.cookie.get('email');
+const usernameInputCookie = _satellite.cookie.get('cc_usernameinput');
+
+if (emailCookie) {
+  sha256(emailCookie)
+    .then(hash => {
+      _satellite.setVar('Registration Email Hash', hash);
+    });
+}
+  else if (usernameInputCookie) {
+    sha256(usernameInputCookie)
+      .then(hash => {
+        _satellite.setVar('Registration Email Hash', hash);
+      });
+  }
+},500);
+
